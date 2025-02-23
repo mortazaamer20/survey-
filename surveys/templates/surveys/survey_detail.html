@@ -1,0 +1,32 @@
+{% extends "surveys/base.html" %}
+
+{% block title %}{{ survey.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4 text-center">{{ survey.title }}</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post" action="{% url 'submit_response' survey.id %}" class="p-4 rounded shadow">
+                {% csrf_token %}
+                {% for question in survey.questions.all %}
+                    <div class="mb-3">
+                        <label class="form-label">{{ question.text }}</label>
+                        <input type="text" name="question_{{ question.id }}" class="form-control" required>
+                    </div>
+                {% endfor %}
+                <!-- Color Picker Input -->
+                <div class="mb-3">
+                    <label class="form-label">اختر لون تعليقك</label>
+                    <input type="color" name="color" value="#ff6f61" class="form-control" style="width: 80px;">
+                </div>
+                <button type="submit" class="btn btn-primary w-100">إرسال الإجابات</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="text-center">
+        <a href="{% url 'survey_list' %}" class="btn btn-secondary">العودة إلى الاستطلاعات</a>
+    </div>
+</div>
+{% endblock %}

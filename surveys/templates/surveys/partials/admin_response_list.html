@@ -1,0 +1,38 @@
+{% extends "surveys/base.html" %}
+
+{% block title %}Responses for {{ survey.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  
+    
+{% for response in responses %}
+  <div class="card comment-card" 
+       style="background-color: {{ response.text_color|default:'#2b2b2b' }};" 
+       data-no-override="true">
+    <div class="card-body">
+      <div>
+        <span class="avatar"></span>
+        <strong style="color: #ffffff;">{{ response.first_answer }}</strong>
+        <small class="text-muted">{{ response.created_at|date:"M d, Y H:i" }}</small>
+      </div>
+      <hr>
+      <div>
+        {% for answer in response.answers.all %}
+          <p class="mb-1" style="color: #ffffff;">
+            <strong>{{ answer.question.text }}:</strong> {{ answer.text }}
+          </p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% empty %}
+  <p class="text-center text-muted">No responses yet.</p>
+{% endfor %}
+
+    
+    <!-- <div class="text-center mt-4">
+      <a href="{% url 'survey_list' %}" class="btn btn-secondary">Back to Surveys</a>
+    </div> -->
+</div>
+{% endblock %}

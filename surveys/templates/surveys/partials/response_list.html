@@ -1,0 +1,8 @@
+{% for response in responses %}
+    <div class="response">
+        <strong>{{ response.first_answer }}</strong><br>
+        {% for answer in response.answers.all %}
+            <p><b>{{ answer.question.text }}:</b> {{ answer.text }}</p>
+        {% endfor %}
+    </div>
+{% endfor %}
