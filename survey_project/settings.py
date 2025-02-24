@@ -138,3 +138,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'  # The URL for serving media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory where media files are stored
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'surveys/static'),  # Ensure your app's static folder is included
+]

@@ -3,53 +3,55 @@
 {% block title %}الاجابات على الاستبيان {{ survey.title }}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <!-- Header: Contains the title and toggle button -->
-    <div id="header" class="d-flex justify-content-between align-items-center mb-3">
-        <h1>الاجابات على"{{ survey.title }}"</h1>
-    </div>
+    {% load static %}
 
-    <!-- HTMX Container: This is refreshed dynamically -->
-    <div id="admin-response-list"
-         hx-get="{% url 'admin_response_list' survey.id %}?partial=true"
-         hx-trigger="every 3s"
-         hx-swap="innerHTML">
-        {% include "surveys/partials/admin_response_list.html" with responses=responses %}
+    <div class="flex flex-col items-center justify-center min-h-screen bg-black text-gray-200 p-6 relative">
+        <div class="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-30 backdrop-blur-2xl"
+             style="background-image: url({% static 'images/img_1.png' %});">
+        </div>
+
+        <!-- Header: Title & Auto-Scroll Toggle -->
+        <div class="w-full max-w-3xl bg-gray-900/60 backdrop-blur-xl backdrop-saturate-150 shadow-lg rounded-xl border border-gray-700 p-6 text-center">
+            <h1 class="text-3xl font-bold text-white mb-4">الاجابات على "{{ survey.title }}"</h1>
+        </div>
+
+        <!-- HTMX Container: Dynamically Updated Responses -->
+        <div id="admin-response-list"
+             hx-get="{% url 'admin_response_list' survey.id %}?partial=true"
+             hx-trigger="every 5s"
+             hx-swap="innerHTML"
+             class="w-full max-w-3xl space-y-6 mt-6">
+            {% include "surveys/partials/admin_response_list.html" with responses=responses %}
+        </div>
+
+        <!-- Buttons: Back & Auto Scroll -->
+
     </div>
-    
-    <div class="text-center mt-4">
-      <a href="{% url 'survey_list' %}" class="btn btn-secondary">Back to Surveys</a>
-      <br>
-      <br>
-      
-      <button id="toggle-autoscroll" class="btn btn-secondary" data-enabled="true">Disable Auto Scroll</button>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_scripts %}
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let autoScrollEnabled = true;
-        const toggleBtn = document.getElementById("toggle-autoscroll");
-        
-        function updateButtonText() {
-            toggleBtn.textContent = autoScrollEnabled ? "Disable Auto Scroll" : "Enable Auto Scroll";
-        }
-        
-        toggleBtn.addEventListener("click", function () {
-            autoScrollEnabled = !autoScrollEnabled;
-            updateButtonText(); // Update button text immediately
-        });
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let autoScrollEnabled = true;
+            const toggleBtn = document.getElementById("toggle-autoscroll");
 
-        document.body.addEventListener("htmx:afterSwap", function () {
-            if (autoScrollEnabled) {
-                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+            function updateButtonText() {
+                toggleBtn.textContent = autoScrollEnabled ? "تعطيل التمرير التلقائي" : "تفعيل التمرير التلقائي";
             }
-        });
 
-        // Set initial button text
-        updateButtonText();
-    });
-</script>
+            toggleBtn.addEventListener("click", function () {
+                autoScrollEnabled = !autoScrollEnabled;
+                updateButtonText();
+            });
+
+            document.body.addEventListener("htmx:afterSwap", function () {
+                if (autoScrollEnabled) {
+                    window.scrollTo({top: document.body.scrollHeight, behavior: "smooth"});
+                }
+            });
+
+            // Set initial button text
+            updateButtonText();
+        });
+    </script>
 {% endblock %}

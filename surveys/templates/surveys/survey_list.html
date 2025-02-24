@@ -1,15 +1,42 @@
 {% extends "surveys/base.html" %}
+{% load static %}
 
 {% block title %}Survey List{% endblock %}
 
 {% block content %}
-<h1>Surveys</h1>
-{% for survey in surveys %}
-    <div class="card">
-        <div class="card-body">
-            <h3>{{ survey.title }}</h3>
-            <a href="{% url 'survey_detail' survey.id %}" class="btn btn-primary">Take Survey</a>
+    <div class="flex flex-col items-center justify-center w-full min-h-screen bg-gray-900 text-gray-100 p-6 relative"
+    >
+
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30 blur-lg"
+             style="background-image: url({% static 'images/img_1.png' %});">
         </div>
+        <!-- Logo & Welcome Message -->
+        <div class="flex flex-col items-center gap-4 text-center mb-8">
+            <img src="{% static 'images/logo.png' %}" alt="logo" class="w-32 brightness-150"/>
+            <h2 class="text-3xl font-bold text-red-100">
+                مجمع الشهيد أبو مهدي المهندس التأهيلي
+            </h2>
+
+            <p class="text-xl font-bold text-red-100  sulphur-point-regular">
+                "نحن كأمة لا خيار لنا سوى المقاومة، لا نملك سوى المقاومة، لا شيء يمكن أن نراهن عليه سوى المقاومة"
+                <br>
+                -الشهيد القائد السيد حسن نصر الله
+            </p>
+        </div>
+
+        <!-- Surveys List -->
+        <div class="w-full max-w-2xl space-y-4">
+            {% for survey in surveys %}
+                <div class="bg-gray-800/50 shadow-lg rounded-xl p-6 text-center transform transition duration-300 hover:scale-105 backdrop-blur-lg backdrop-saturate-150 border border-white/5 ">
+                    <h3 class="text-2xl font-semibold text-white">{{ survey.title }}</h3>
+                    <a href="{% url 'survey_detail' survey.id %}"
+                       style="text-decoration: none"
+                       class="inline-block mt-4 px-6 py-2 text-lg font-medium bg-[#199254] text-white rounded-lg hover:bg-[#166B3Eaa] transition">
+                        بدء الاستبيان
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
-{% endfor %}
 {% endblock %}

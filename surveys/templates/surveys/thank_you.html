@@ -3,9 +3,17 @@
 {% block title %}Thank You{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h1>شكراً لك!</h1>
-        <p>تم إرسال إجاباتك بنجاح.</p>
-        <a href="{% url 'survey_list' %}" class="btn btn-secondary">العودة إلى الاستطلاعات</a>
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-100 p-6">
+    <!-- Glassmorphism Box -->
+    <div class="w-full max-w-md bg-white/10 backdrop-blur-2xl backdrop-saturate-200 shadow-lg rounded-2xl border border-white/20 p-8 text-center">
+        <h1 class="text-4xl font-bold text-white mb-4">شكراً لك!</h1>
+        <p class="text-lg text-gray-300 mb-6">تم إرسال إجاباتك بنجاح.</p>
+
+        <!-- Back to Surveys Button -->
+        <a href="{% url 'survey_list' %}" 
+           class="inline-block px-6 py-3 text-lg font-medium bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+            العودة إلى الاستطلاعات
+        </a>
     </div>
+</div>
 {% endblock %}
